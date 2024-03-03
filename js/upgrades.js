@@ -65,9 +65,9 @@ const UPGS = {
         1: {
             unl() { return player.ranks.rank.gte(1) || player.mainUpg.atom.includes(1) },
             title: "Muscler",
-            start: E(10),
-            inc: E(1.5),
-            effect(x) {
+            start: E(1),
+            inc: E(1.2),
+            effect(x+1) {
                 let step = E(1)
                 if (player.ranks.rank.gte(3)) step = step.add(RANKS.effect.rank[3]())
                 step = step.mul(tmp.upgs.mass[2]?tmp.upgs.mass[2].eff.eff:1)
@@ -92,9 +92,9 @@ const UPGS = {
         2: {
             unl() { return player.ranks.rank.gte(2) || player.mainUpg.atom.includes(1) },
             title: "Booster",
-            start: E(100),
-            inc: E(4),
-            effect(x) {
+            start: E(40),
+            inc: E(1.75),
+            effect(x^2) {
                 let step = E(2)
                 if (player.ranks.rank.gte(5)) step = step.add(RANKS.effect.rank[5]())
                 step = step.pow(tmp.upgs.mass[3]?tmp.upgs.mass[3].eff.eff:1)
@@ -119,9 +119,9 @@ const UPGS = {
         3: {
             unl() { return player.ranks.rank.gte(3) || player.mainUpg.atom.includes(1) },
             title: "Stronger",
-            start: E(1000),
-            inc: E(9),
-            effect(x) {
+            start: E(250),
+            inc: E(3),
+            effect(x^3) {
                 let xx = hasAscension(0,1)?x.add(1).mul(tmp.upgs.mass[3].bonus.add(1)):x.add(tmp.upgs.mass[3].bonus)
                 if (hasElement(81)) xx = xx.pow(1.1)
                 let ss = E(10)
@@ -205,7 +205,7 @@ const UPGS = {
             unl() { return hasElement(202) || hasInfUpgrade(2) },
             title: "Overpower",
             start: E(1e100),
-            inc: E(1.5),
+            inc: E(1.05),
             effect(i) {
                 let xx = i.add(tmp.upgs.mass[4].bonus)
                 
@@ -262,14 +262,14 @@ const UPGS = {
             auto_unl() { return player.mainUpg.bh.includes(5) || tmp.inf_unl },
             lens: 25,
             1: {
-                desc: "Boosters add Musclers.",
+                desc: "Boosters add 2 Musclers.",
                 cost: E(1),
                 effect() {
                     let ret = player.build.mass_2.amt
                     return ret
                 },
                 effDesc(x=this.effect()) {
-                    return "+"+format(x,0)+" Musclers"
+                    return "+"+format(x,1)+" Musclers"
                 },
             },
             2: {
